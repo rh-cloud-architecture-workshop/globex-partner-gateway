@@ -6,44 +6,6 @@
         "description": "Globex APIs made accessible to global partners to view Globex' catalog and products"
     },
     "paths": {
-        "/partners/services/catalog/product": {
-            "summary": "Get a paginated list of products",
-            "description": "Get a paginated list of products",
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Product list found."
-                    }
-                },
-                "description": "Get a paginated list of products"
-            },
-            "parameters": [
-                {
-                    "name": "page",
-                    "description": "The page number. First page is 1.",
-                    "schema": {
-                        "type": "integer"
-                    },
-                    "in": "query"
-                },
-                {
-                    "name": "limit",
-                    "description": "The maximum number of products returned.",
-                    "schema": {
-                        "type": "integer"
-                    },
-                    "in": "query"
-                },
-                {
-                    "name": "inventory",
-                    "description": "Whether to include inventory information.",
-                    "schema": {
-                        "type": "boolean"
-                    },
-                    "in": "query"
-                }
-            ]
-        },
         "/partners/services/catalog/product/{id}": {
             "summary": "Get product by id",
             "description": "Get product by id",
@@ -176,6 +138,62 @@
                     "required": true
                 }
             ]
+        },
+        "/partners/services/catalog/product": {
+            "summary": "Get a paginated list of products",
+            "description": "Get a paginated list of products",
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {}
+                        },
+                        "description": "Product list found."
+                    }
+                },
+                "description": "Get a paginated list of products"
+            },
+            "parameters": [
+                {
+                    "name": "page",
+                    "description": "The page number. First page is 1.",
+                    "schema": {
+                        "type": "integer"
+                    },
+                    "in": "query"
+                },
+                {
+                    "name": "limit",
+                    "description": "The maximum number of products returned.",
+                    "schema": {
+                        "type": "integer"
+                    },
+                    "in": "query"
+                },
+                {
+                    "name": "inventory",
+                    "description": "Whether to include inventory information.",
+                    "schema": {
+                        "type": "boolean"
+                    },
+                    "in": "query"
+                }
+            ]
+        }
+    },
+    "components": {
+        "schemas": {
+            "paginated-product-list": {
+                "title": "Root Type for paginated-product-list",
+                "description": "",
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "oidc-connect": {
+                "openIdConnectUrl": "https://<keycloak-url.com>/auth/realms/<realm>/.well-known/openid-configuration",
+                "type": "openIdConnect"
+            }
         }
     }
 }
