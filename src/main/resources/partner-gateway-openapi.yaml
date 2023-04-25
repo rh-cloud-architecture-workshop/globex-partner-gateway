@@ -11,7 +11,9 @@ paths:
             responses:
                 '200':
                     content:
-                        application/json: {}
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/paginatedProductList'
                     description: Product list found.
             description: Get a paginated list of products
         parameters:
@@ -47,6 +49,12 @@ paths:
                     required: false
             responses:
                 '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/product'
                     description: Product found
                 '404':
                     description: Product not found
@@ -72,6 +80,12 @@ paths:
                     in: query
             responses:
                 '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/product'
                     description: product list found
             summary: Get product list
             description: Get product list
@@ -89,6 +103,12 @@ paths:
         get:
             responses:
                 '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/product'
                     description: Product list found.
             summary: Get products by category
         parameters:
@@ -111,6 +131,12 @@ paths:
         get:
             responses:
                 '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/product'
                     description: Product list found.
             summary: Get products by tag
         parameters:
@@ -129,15 +155,195 @@ paths:
                 required: true
 components:
     schemas:
-        paginated-product-list:
+        product:
+            description: ''
+            type: object
+        paginatedProductList:
             title: Root Type for paginated-product-list
             description: ''
             type: object
-    securitySchemes:
-      partner_oauth:
-        type: oauth2
-        flows:
-          clientCredentials:
-            tokenUrl: <replaceme>
-            scopes:
-              {}
+    responses:
+        paginated-product-list:
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/paginatedProductList'
+                    examples:
+                        paginated-product-list-with-inventory:
+                            value:
+                                content:
+                                    -
+                                        itemId: '329299'
+                                        name: Quarkus T-shirt
+                                        desc: >-
+                                            Our T-Shirt is an everyday essential! This short-sleeve
+                                            heavyweight T-shirt is comfortable, economical and made to last.
+                                            Designed with a traditional fit that runs true to size, he’ll show
+                                            off his personality, humor and interests with an easy, relaxed
+                                            style.
+                                        price: 10
+                                        quantity: 736
+                                    -
+                                        itemId: '329199'
+                                        name: Pronounced Kubernetes
+                                        desc: >-
+                                            Our Men's Value T-Shirt is an everyday essential! This
+                                            short-sleeve heavyweight T-shirt is comfortable, economical and
+                                            made to last. Designed with a traditional fit that runs true to
+                                            size, he’ll show off his personality, humor and interests with an
+                                            easy, relaxed style.
+                                        price: 9
+                                        quantity: 512
+                                pageable:
+                                    sort:
+                                        sorted: false
+                                        unsorted: true
+                                        empty: true
+                                    offset: 0
+                                    pageNumber: 0
+                                    pageSize: 5
+                                    paged: true
+                                    unpaged: false
+                                totalPages: 9
+                                totalElements: 41
+                                last: false
+                                size: 5
+                                number: 0
+                                sort:
+                                    sorted: false
+                                    unsorted: true
+                                    empty: true
+                                numberOfElements: 5
+                                first: true
+                                empty: false
+                        paginated-product-list-without-inventory:
+                            value:
+                                content:
+                                    -
+                                        itemId: '329299'
+                                        name: Quarkus T-shirt
+                                        desc: >-
+                                            Our T-Shirt is an everyday essential! This short-sleeve
+                                            heavyweight T-shirt is comfortable, economical and made to last.
+                                            Designed with a traditional fit that runs true to size, he’ll show
+                                            off his personality, humor and interests with an easy, relaxed
+                                            style.
+                                        price: 10
+                                    -
+                                        itemId: '329199'
+                                        name: Pronounced Kubernetes
+                                        desc: >-
+                                            Our Men's Value T-Shirt is an everyday essential! This
+                                            short-sleeve heavyweight T-shirt is comfortable, economical and
+                                            made to last. Designed with a traditional fit that runs true to
+                                            size, he’ll show off his personality, humor and interests with an
+                                            easy, relaxed style.
+                                        price: 9
+                                pageable:
+                                    sort:
+                                        sorted: false
+                                        unsorted: true
+                                        empty: true
+                                    offset: 0
+                                    pageNumber: 0
+                                    pageSize: 5
+                                    paged: true
+                                    unpaged: false
+                                totalPages: 9
+                                totalElements: 41
+                                last: false
+                                size: 5
+                                number: 0
+                                sort:
+                                    sorted: false
+                                    unsorted: true
+                                    empty: true
+                                numberOfElements: 5
+                                first: true
+                                empty: false
+            description: |-
+                API to get product details.
+                - get Paginated list of Products
+                - get Product details based on comma separated ids
+                - get Product detail of a specific product id
+        product:
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/product'
+                        description: Product Details by Id
+                    examples:
+                        product-with-inventory:
+                            value:
+                                itemId: '329299'
+                                name: Quarkus T-shirt
+                                desc: >-
+                                    Our T-Shirt is an everyday essential! This short-sleeve heavyweight
+                                    T-shirt is comfortable, economical and made to last. Designed with a
+                                    traditional fit that runs true to size, he’ll show off his personality,
+                                    humor and interests with an easy, relaxed style.
+                                price: 10
+                                quantity: 736
+                        product-without-inventory:
+                            value:
+                                itemId: '329299'
+                                name: Quarkus T-shirt
+                                desc: >-
+                                    Our T-Shirt is an everyday essential! This short-sleeve heavyweight
+                                    T-shirt is comfortable, economical and made to last. Designed with a
+                                    traditional fit that runs true to size, he’ll show off his personality,
+                                    humor and interests with an easy, relaxed style.
+                                price: 10
+            description: Product Details by Id
+        product-list:
+            content:
+                application/json:
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/components/schemas/product'
+                            description: Product by list of Ids
+                    examples:
+                        product-list-with-inventory:
+                            value:
+                                -
+                                    itemId: '329299'
+                                    name: Quarkus T-shirt
+                                    desc: >-
+                                        Our T-Shirt is an everyday essential! This short-sleeve heavyweight
+                                        T-shirt is comfortable, economical and made to last. Designed with a
+                                        traditional fit that runs true to size, he’ll show off his
+                                        personality, humor and interests with an easy, relaxed style.
+                                    price: 10
+                                    quantity: 736
+                                -
+                                    itemId: '329199'
+                                    name: Pronounced Kubernetes
+                                    desc: >-
+                                        Our Men's Value T-Shirt is an everyday essential! This short-sleeve
+                                        heavyweight T-shirt is comfortable, economical and made to last.
+                                        Designed with a traditional fit that runs true to size, he’ll show off
+                                        his personality, humor and interests with an easy, relaxed style.
+                                    price: 9
+                                    quantity: 512
+                        product-list-without-inventory:
+                            value:
+                                -
+                                    itemId: '329299'
+                                    name: Quarkus T-shirt
+                                    desc: >-
+                                        Our T-Shirt is an everyday essential! This short-sleeve heavyweight
+                                        T-shirt is comfortable, economical and made to last. Designed with a
+                                        traditional fit that runs true to size, he’ll show off his
+                                        personality, humor and interests with an easy, relaxed style.
+                                    price: 10
+                                -
+                                    itemId: '329199'
+                                    name: Pronounced Kubernetes
+                                    desc: >-
+                                        Our Men's Value T-Shirt is an everyday essential! This short-sleeve
+                                        heavyweight T-shirt is comfortable, economical and made to last.
+                                        Designed with a traditional fit that runs true to size, he’ll show off
+                                        his personality, humor and interests with an easy, relaxed style.
+                                    price: 9
+            description: List of products
